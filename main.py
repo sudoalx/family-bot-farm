@@ -12,7 +12,6 @@ HOURS = 60 * MINUTES
 
 
 async def main():
-    print(API_HASH, APP_ID)
     async with Client("my_account", APP_ID, API_HASH) as app:
         print("Bot started!")
         # default values
