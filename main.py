@@ -4,15 +4,16 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-api_id = os.getenv("API_ID")
-api_hash = os.getenv("API_HASH")
+APP_ID = os.getenv("APP_ID")
+API_HASH = os.getenv("API_HASH")
 
 MINUTES = 60
 HOURS = 60 * MINUTES
 
 
 async def main():
-    async with Client("my_account", api_id, api_hash) as app:
+    print(API_HASH, APP_ID)
+    async with Client("my_account", APP_ID, API_HASH) as app:
         print("Bot started!")
         # default values
         start_hours = 0
