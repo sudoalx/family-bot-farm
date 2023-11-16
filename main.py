@@ -22,6 +22,10 @@ accounts = [
     {
         "session_name": "account3",
         "chat_id": -1001215108117  # Replace with the desired chat ID for this account
+    },
+    {
+        "session_name": "account4",
+        "chat_id": -1001215108117  # Replace with the desired chat ID >
     }
 ]
 
@@ -68,9 +72,9 @@ async def main(session_name, chat_id):
 
         while True:
             await app.send_message(chat_id, "/harvest")
-            await app.send_message(chat_id, "/plant eggplant 9")
+            await app.send_message(chat_id, "/plant carrot 9")
             print(f"Account {session_name}: Message sent!")
-            await asyncio.sleep(int(6 * HOURS + 5))
+            await asyncio.sleep(int(10 * HOURS + 10))
 
 # Run the main function for each account
 for account in accounts:
