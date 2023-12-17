@@ -110,17 +110,19 @@ def set_schedule(account):
         print(">", plant['name'])
     plant_name = input('Enter plant name: ')
     plant_info = get_plant_info_by_name(plant_name)
+    print('How many plants do you want to plant?')
+    ammount = int(input("Enter ammount: "))
     if plant_info:
-        schedule_plant(plant_info, account)
+        schedule_plant(plant_info, account, ammount)
     else:
         print('Invalid plant name')
 
 
-def schedule_plant(plant_info, account):
+def schedule_plant(plant_info, account, ammount):
     time = plant_info['time']  # frequency in minutes
     plant_name = plant_info['name']
     print(f'Scheduling {plant_name} to be planted every {time} minutes')
-    schedule.every(time).seconds.do(plant, plant_info, account)
+    schedule.every(time).seconds.do(plant, plant_info, account, ammount)
 
 
 def plant(plant_info, account):
@@ -128,7 +130,7 @@ def plant(plant_info, account):
     send_plant_command(plant_info, account)
 
 
-def send_plant_command(plant_info, account):
+def send_plant_command(plant_info, account, ammount):
     send_harvest_command(account)
     asyncio.sleep(1)
     client = Client(
@@ -137,7 +139,7 @@ def send_plant_command(plant_info, account):
         api_hash=api_hash
     )
     chat_id = config['chat_id']
-    plant_command = f'/plant {plant_info["name"]} 9'
+    plant_command = f'/plant {plant_info["name"]} {ammount}'
     client.start()
     client.send_message(int(chat_id), str(plant_command))
     client.stop()
