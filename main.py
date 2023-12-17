@@ -4,6 +4,8 @@ from pyrogram import Client
 import asyncio
 import os
 from dotenv import load_dotenv
+import schedule
+import time
 
 load_dotenv()
 
@@ -108,7 +110,50 @@ def set_schedule(account):
         print(">", plant['name'])
     plant_name = input('Enter plant name: ')
     plant_info = get_plant_info_by_name(plant_name)
-    print(plant_info)
+    if plant_info:
+        schedule_plant(plant_info, account)
+    else:
+        print('Invalid plant name')
+
+
+def schedule_plant(plant_info, account):
+    time = plant_info['time']  # frequency in minutes
+    plant_name = plant_info['name']
+    print(f'Scheduling {plant_name} to be planted every {time} minutes')
+    schedule.every(time).seconds.do(plant, plant_info, account)
+
+
+def plant(plant_info, account):
+    print(f'Planting {plant_info["name"]}...')
+    send_plant_command(plant_info, account)
+
+
+def send_plant_command(plant_info, account):
+    send_harvest_command(account)
+    asyncio.sleep(1)
+    client = Client(
+        account,
+        api_id=api_id,
+        api_hash=api_hash
+    )
+    chat_id = config['chat_id']
+    plant_command = f'/plant {plant_info["name"]} 9'
+    client.start()
+    client.send_message(int(chat_id), str(plant_command))
+    client.stop()
+
+
+def send_harvest_command(account):
+    client = Client(
+        account,
+        api_id=api_id,
+        api_hash=api_hash
+    )
+    chat_id = config['chat_id']
+    harvest_command = '/harvest'
+    client.start()
+    client.send_message(int(chat_id), str(harvest_command))
+    client.stop()
 
 
 def schedule_accounts():
@@ -138,3 +183,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+    # keep the program running to schedule plants
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
