@@ -2,3 +2,5 @@
 .venv
 venv
 *.session*
+
+config.json
