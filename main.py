@@ -125,7 +125,11 @@ def set_schedule(account):
 def schedule_plant(plant_info, account, ammount):
     time = plant_info['time']  # frequency in minutes
     plant_name = plant_info['name']
-    print(f'Scheduling {plant_name} to be planted every {time} minutes')
+    print('Sending harvest command to make sure slots are available...')
+    send_harvest_command(account)
+    print(f'Sending first plant command for {plant_name}...')
+    send_plant_command(plant_info, account, ammount)
+    print(f'Scheduling {plant_name} to be planted every {time/60} minutes')
     schedule.every(time).seconds.do(plant, plant_info, account, ammount)
 
 
@@ -135,8 +139,6 @@ def plant(plant_info, account):
 
 
 def send_plant_command(plant_info, account, ammount):
-    send_harvest_command(account)
-    asyncio.sleep(1)
     client = Client(
         account,
         api_id=api_id,
@@ -193,6 +195,48 @@ def send_fertilizer_command(username):
         client.stop()
 
 
+def donate_blood():
+    print('Set donate blood every 24 hours for a specific username')
+    print('Enter username')
+    username = input()
+    schedule.every(24).hours.do(donate_blood_user, username)
+
+
+def donate_blood_user(username):
+    print(f'Donating blood for {username}')
+    send_donate_blood_command(username)
+
+
+def send_donate_blood_command(username):
+    for account in get_existing_sessions():
+        chat_id = config['chat_id']
+        client = Client(
+            account,
+            api_id=api_id,
+            api_hash=api_hash
+        )
+        client.start()
+        client.send_message(chat_id, '/donateblood @' + username)
+        client.stop()
+
+
+def manage_pending_jobs():
+    print(schedule.jobs)
+    while schedule.jobs:
+        options = ['clearall', 'clear', 'exit']
+        print('Enter an option')
+        print(options)
+        option = input()
+        if option == 'clearall':
+            schedule.clear()
+        elif option == 'clear':
+            print('Enter job index')
+            index = int(input())
+            schedule.jobs.pop(index)
+        else:
+            break
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-t', '--test', action='store_true',
@@ -220,12 +264,15 @@ def main():
         print('Waiting for next task to be executed')
         # Ask user if they want to run another action or exit
         print('Do you want to run another action?')
-        available_actions = ['test', 'create', 'schedule', 'fertilize', 'exit']
+        available_actions = ['pending', 'test', 'create',
+                             'schedule', 'fertilize', 'donate', 'exit']
         print(available_actions)
         print('Enter an action name or exit')
         action = input("Enter action: ")
         if action in available_actions:
-            if action == 'test':
+            if action == 'pending':
+                manage_pending_jobs()
+            elif action == 'test':
                 test_existing_sessions()
             elif action == 'create':
                 create_accounts()
@@ -233,6 +280,8 @@ def main():
                 schedule_accounts()
             elif action == 'fertilize':
                 fertilize()
+            elif action == 'donate':
+                donate_blood()
             elif action == 'exit':
                 exit()
 
