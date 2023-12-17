@@ -1,0 +1,20 @@
+{
+    "accounts": [
+        {
+            "session_name": "account1",
+            "chat_id": -1001215108117
+        },
+        {
+            "session_name": "account2",
+            "chat_id": -1001215108117
+        },
+        {
+            "session_name": "account3",
+            "chat_id": -1001215108117
+        },
+        {
+            "session_name": "account4",
+            "chat_id": -1001215108117
+        }
+    ]
+}

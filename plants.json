@@ -1,0 +1,40 @@
+{
+    "plants": [
+        {
+            "name": "corn",
+            "time": 5,
+            "price": 15,
+            "sell": 25
+        },
+        {
+            "name": "tomato",
+            "time": 30,
+            "price": 25,
+            "sell": 40
+        },
+        {
+            "name": "pepper",
+            "time": 60,
+            "price": 40,
+            "sell": 65
+        },
+        {
+            "name": "potato",
+            "time": 180,
+            "price": 60,
+            "sell": 100
+        },
+        {
+            "name": "eggplant",
+            "time": 360,
+            "price": 80,
+            "sell": 150
+        },
+        {
+            "name": "carrot",
+            "time": 480,
+            "price": 100,
+            "sell": 200
+        }
+    ]
+}
