@@ -168,6 +168,31 @@ def schedule_accounts():
         set_schedule(session)
 
 
+def fertilize():
+    print('Set fertilizer every 20 minutes for a specific username')
+    print('Enter username')
+    username = input()
+    schedule.every(20).minutes.do(fertilize_user, username)
+
+
+def fertilize_user(username):
+    print(f'Ferilizing {username}')
+    send_fertilizer_command(username)
+
+
+def send_fertilizer_command(username):
+    for account in get_existing_sessions():
+        chat_id = config['chat_id']
+        client = Client(
+            account,
+            api_id=api_id,
+            api_hash=api_hash
+        )
+        client.start()
+        client.send_message(chat_id, '/fertilize @' + username)
+        client.stop()
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-t', '--test', action='store_true',
@@ -186,13 +211,31 @@ def main():
     else:
         schedule_accounts()
 
-
-if __name__ == '__main__':
-    main()
     # check if there are pending jobs
     pending_jobs = schedule.jobs
 
     # keep the program running to schedule plants
     while pending_jobs:
         schedule.run_pending()
-        time.sleep(1)
+        print('Waiting for next task to be executed')
+        # Ask user if they want to run another action or exit
+        print('Do you want to run another action?')
+        available_actions = ['test', 'create', 'schedule', 'fertilize', 'exit']
+        print(available_actions)
+        print('Enter an action name or exit')
+        action = input("Enter action: ")
+        if action in available_actions:
+            if action == 'test':
+                test_existing_sessions()
+            elif action == 'create':
+                create_accounts()
+            elif action == 'schedule':
+                schedule_accounts()
+            elif action == 'fertilize':
+                fertilize()
+            elif action == 'exit':
+                exit()
+
+
+if __name__ == '__main__':
+    main()
