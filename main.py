@@ -35,14 +35,18 @@ def set_chat_id(chat_id):
 
 def check_account(account):
     print(f'Checking account {account}')
-    client = Client(
-        account,
-        api_id=api_id,
-        api_hash=api_hash
-    )
-    client.start()
-    print(client.get_me().username)
-    client.stop()
+    try:
+        client = Client(
+            account,
+            api_id=api_id,
+            api_hash=api_hash
+        )
+        client.start()
+        username = client.get_me().username
+        print(f'Account with username {username} is working')
+        client.stop()
+    except Exception as e:
+        print(f'Error checking account {account}: {str(e)}')
 
 
 def get_existing_sessions():
