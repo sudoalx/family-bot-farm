@@ -2,7 +2,7 @@
     "plants": [
         {
             "name": "corn",
-            "time": 600,
+            "time": 300,
             "price": 15,
             "sell": 25
         },
