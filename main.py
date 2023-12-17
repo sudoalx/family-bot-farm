@@ -84,7 +84,7 @@ def create_accounts_prompt():
     print(f'Created {num_accounts} accounts')
 
 
-def init_bot():
+def create_accounts():
     if get_existing_sessions():
         print('Existing sessions found, do you want to create new ones?')
         print('y/n')
@@ -176,16 +176,19 @@ def main():
     if args.test:
         test_existing_sessions()
     elif args.create:
-        init_bot()
+        create_accounts()
     elif args.schedule:
         schedule_accounts()
     else:
-        print('No arguments passed')
+        schedule_accounts()
 
 
 if __name__ == '__main__':
     main()
+    # check if there are pending jobs
+    pending_jobs = schedule.jobs
+
     # keep the program running to schedule plants
-    while True:
+    while pending_jobs:
         schedule.run_pending()
         time.sleep(1)
