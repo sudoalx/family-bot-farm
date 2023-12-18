@@ -134,14 +134,14 @@ def schedule_plant(plant_info, account, ammount):
     print('Sending harvest command to make sure slots are available...')
     send_harvest_command(account)
     print(f'Sending first plant command for {plant_name}...')
-    send_plant_command(plant_info, account, ammount)
+    plant(plant_info, account, ammount)
     print(f'Scheduling {plant_name} to be planted every {time/60} minutes')
     schedule.every(time).seconds.do(plant, plant_info, account, ammount)
 
 
-def plant(plant_info, account):
+def plant(plant_info, account, ammount):
     print(f'Planting {plant_info["name"]}...')
-    send_plant_command(plant_info, account)
+    send_plant_command(plant_info, account, ammount)
 
 
 def send_plant_command(plant_info, account, ammount):
