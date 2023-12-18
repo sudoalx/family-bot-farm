@@ -115,9 +115,11 @@ def set_schedule(account):
     print(
         f'What plant do you want to schedule for {username}?')
     for plant in plants:
-        print(">", plant['name'])
-    plant_name = input('Enter plant name: ')
-    plant_info = get_plant_info_by_name(plant_name)
+        index = plants.index(plant) + 1
+        print(f'{index}. {plant["name"]}')
+    plant_index = input('Enter plant number: ')
+    plant_info = get_plant_info_by_index(int(plant_index) - 1)
+    print(f'You selected {plant_info["name"]}')
     print('How many plants do you want to plant?')
     ammount = int(input("Enter ammount: "))
     if plant_info:
