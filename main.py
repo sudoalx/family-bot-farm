@@ -243,6 +243,24 @@ def manage_pending_jobs():
             break
 
 
+def save_scheduled_jobs(jobs_file='scheduled_jobs.json'):
+    scheduled_jobs = [(str(job), job.next_run) for job in schedule.jobs]
+    with open(jobs_file, 'w') as f:
+        json.dump(scheduled_jobs, f)
+
+
+def load_scheduled_jobs(jobs_file='scheduled_jobs.json'):
+    try:
+        with open(jobs_file, 'r') as f:
+            scheduled_jobs = json.load(f)
+            for job_str, next_run in scheduled_jobs:
+                job = eval(job_str)
+                job.next_run = next_run
+                schedule.jobs.append(job)
+    except FileNotFoundError:
+        pass  # Ignore if the file doesn't exist
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-t', '--test', action='store_true',
