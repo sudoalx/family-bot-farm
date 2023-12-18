@@ -27,6 +27,10 @@ def get_plant_info_by_name(plant_name):
             return plant
 
 
+def get_plant_info_by_index(plant_index):
+    return plants[plant_index]
+
+
 def set_chat_id(chat_id):
     config['chat_id'] = chat_id
     with open('config.json', 'w') as f:
