@@ -1,6 +1,12 @@
 {
     "plants": [
         {
+            "name": "quick",
+            "time": 180,
+            "price": 50,
+            "sell": 60
+        },
+        {
             "name": "corn",
             "time": 300,
             "price": 15,
