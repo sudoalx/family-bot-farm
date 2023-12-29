@@ -1,3 +1,4 @@
 {
-    "chat_id": "send to chat_id"
+    "chat_id": "send to chat_id",
+    "bot_id": "bot_username"
 }
