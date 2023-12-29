@@ -2,43 +2,43 @@
     "plants": [
         {
             "name": "quick",
-            "time": 180,
+            "time": 185,
             "price": 50,
             "sell": 60
         },
         {
             "name": "corn",
-            "time": 300,
+            "time": 305,
             "price": 15,
             "sell": 25
         },
         {
             "name": "tomato",
-            "time": 1800,
+            "time": 1805,
             "price": 25,
             "sell": 40
         },
         {
             "name": "pepper",
-            "time": 3600,
+            "time": 3605,
             "price": 40,
             "sell": 65
         },
         {
             "name": "potato",
-            "time": 10800,
+            "time": 10805,
             "price": 60,
             "sell": 100
         },
         {
             "name": "eggplant",
-            "time": 21600,
+            "time": 21605,
             "price": 80,
             "sell": 150
         },
         {
             "name": "carrot",
-            "time": 28800,
+            "time": 28805,
             "price": 100,
             "sell": 200
         }
